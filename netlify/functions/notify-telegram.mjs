@@ -5,8 +5,7 @@ export default async (request) => {
   }
 
   const token = process.env.TELEGRAM_BOT_TOKEN;
-  const chatId = process.env.TELEGRAM_CHAT_ID || "1973832434";
-
+  const chatId = process.env.TELEGRAM_CHAT_ID;
   if (!token) {
     return new Response("Missing Telegram token", { status: 500 });
   }

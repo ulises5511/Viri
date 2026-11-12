@@ -1,0 +1,136 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Viri & Ulises ❤️</title>
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;padding:25px 15px;
+  background:#f5eee2;color:#503c35;
+  font-family:Georgia,serif;
+  text-align:center;
+}
+.card{
+  max-width:520px;margin:auto;padding:38px 30px;
+  background:#fffaf1;border:1px solid #e5d6c2;
+  box-shadow:0 8px 30px #6c483018;
+}
+.top{
+  color:#b47b7a;letter-spacing:5px;
+  font:12px Arial,sans-serif;
+}
+.stars{color:#c49a53;font-size:27px;margin:25px}
+h1{font-size:43px;color:#782333;font-weight:normal;margin:20px 0}
+h1 span{color:#c3a16c;font-size:27px}
+.subtitle{font-size:22px;line-height:1.5}
+.pasta{font-size:65px;margin:22px}
+.message{font-size:23px;line-height:1.38;margin:25px 0}
+.details{
+ display:grid;grid-template-columns:1fr 1fr;
+ gap:12px;margin:28px 0;
+}
+.detail{border-top:1px solid #e9ddce;border-bottom:1px solid #e9ddce;padding:14px 5px}
+.detail small,.destination small{
+ display:block;color:#a9957f;letter-spacing:3px;
+ font:11px Arial,sans-serif;margin-bottom:9px
+}
+.detail strong,.destination strong{font-size:19px;font-weight:normal}
+.destination{border-bottom:1px solid #e9ddce;padding:15px}
+.buttons{display:flex;gap:14px;margin-top:28px}
+button{
+ flex:1;padding:19px 8px;border:0;
+ font:14px Arial,sans-serif;letter-spacing:2px;
+ cursor:pointer;min-height:57px
+}
+#yes{background:#792333;color:white}
+#no{background:#b8aa9b;color:#493e36}
+#result{font-size:22px;line-height:1.5;color:#782333;margin-top:30px}
+.footer{margin-top:110px;color:#a18b7e;font-style:italic;font-size:17px}
+.signature{margin-top:35px;color:#b5a38c;font:11px Arial,sans-serif;letter-spacing:3px}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="top">UN PEQUEÑO PLAN PARA NOSOTROS</div>
+  <div class="stars">✦　✦　✦</div>
+  <h1>Viri <span>&</span> Ulises</h1>
+  <div class="subtitle">Tengo una invitación especial para ti, mi amor.</div>
+  <div class="pasta">🍝</div>
+
+  <div class="message">
+    Mi Viri, mi amor, mi vida, ojitos bonitos...
+    ¿quieres ir a comer pasta conmigo este domingo?
+    Me encantaría compartir contigo una tarde bonita,
+    reírnos y disfrutar de tu compañía. ❤️
+  </div>
+
+  <div class="details">
+    <div class="detail">
+      <small>FECHA</small>
+      <strong>Domingo 15 de noviembre</strong>
+    </div>
+    <div class="detail">
+      <small>HORA</small>
+      <strong>5:00 p. m.</strong>
+    </div>
+  </div>
+
+  <div class="destination">
+    <small>DESTINO</small>
+    <strong>Un lugar con buena pasta</strong>
+  </div>
+
+  <div class="buttons">
+    <button id="yes">¡SÍ! ❤️</button>
+    <button id="no">NO 🙈</button>
+  </div>
+
+  <div id="result" aria-live="polite"></div>
+  <div class="footer">Con mucho cariño, para ti, Viri. ❤️</div>
+  <div class="signature">CON CARIÑO, ULISES · BUON APPETITO</div>
+</div>
+
+<script>
+const yes = document.getElementById("yes");
+const no = document.getElementById("no");
+const result = document.getElementById("result");
+
+no.addEventListener("click", () => {
+  no.style.transform =
+    `translate(${Math.random()*100-50}px,${Math.random()*100-50}px)`;
+});
+
+yes.addEventListener("click", async () => {
+  yes.disabled = true;
+  yes.textContent = "ENVIANDO... ❤️";
+
+  try {
+    const response = await fetch(
+      "/.netlify/functions/notificar-telegram",
+      {
+        method: "POST",
+        headers: {"Content-Type":"application/json"},
+        body: JSON.stringify({answer:"yes"})
+      }
+    );
+
+    if (!response.ok) throw new Error("No se pudo enviar");
+
+    result.textContent =
+      "¡Respuesta enviada! Muchas gracias, mi amor. ❤️🍝 Ya quiero compartir esta cita contigo, ojitos bonitos.";
+    yes.style.display = "none";
+    no.style.display = "none";
+
+  } catch (error) {
+    result.textContent =
+      "Uy, no se pudo enviar tu respuesta. Inténtalo una vez más, por favor. ❤️";
+    yes.disabled = false;
+    yes.textContent = "REINTENTAR ❤️";
+  }
+});
+</script>
+</body>
+</html>

@@ -109,7 +109,7 @@ yes.addEventListener("click", async () => {
 
   try {
     const response = await fetch(
-      "/.netlify/functions/notificar-telegram",
+      "/.netlify/functions/notify-telegram",
       {
         method: "POST",
         headers: {"Content-Type":"application/json"},

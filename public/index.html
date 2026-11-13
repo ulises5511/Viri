@@ -48,23 +48,41 @@ button{
 #yes{background:#792333;color:white}
 #no{background:#b8aa9b;color:#493e36}
 #result{font-size:22px;line-height:1.5;color:#782333;margin-top:30px}
-.footer{margin-top:110px;color:#a18b7e;font-style:italic;font-size:17px}
-.signature{margin-top:35px;color:#b5a38c;font:11px Arial,sans-serif;letter-spacing:3px}
+.footer{margin-top:65px;color:#a18b7e;font-style:italic;font-size:17px;line-height:1.5}
+.signature{margin-top:25px;color:#b5a38c;font:13px Georgia,serif;letter-spacing:1px}
 </style>
 </head>
 <body>
 <div class="card">
-  <div class="top">UN PEQUEÑO PLAN PARA NOSOTROS</div>
+  <div class="top">UNA INVITACIÓN PARA MI NIÑA HERMOSA</div>
   <div class="stars">✦　✦　✦</div>
   <h1>Viri <span>&</span> Ulises</h1>
-  <div class="subtitle">Tengo una invitación especial para ti, mi amor.</div>
+  <div class="subtitle">Tengo una invitación especial para ti. ❤️</div>
   <div class="pasta">🍝</div>
 
   <div class="message">
-    Mi Viri, mi amor, mi vida, ojitos bonitos...
-    ¿quieres ir a comer pasta conmigo este domingo?
-    Me encantaría compartir contigo una tarde bonita,
-    reírnos y disfrutar de tu compañía. ❤️
+    Mi niña hermosa:
+
+    <br><br>
+
+    Quiero invitarte a una cita este domingo.
+    ¿Me podrías conceder el gusto de invitarte a cenar?
+
+    <br><br>
+
+    Me encantaría pasar una tarde bonita contigo,
+    disfrutar de tu compañía, platicar, reírnos
+    y pasar un momento juntos.
+
+    <br><br>
+
+    Me gustaría consentirte un poquito y hacerte pasar
+    un momento bonito.
+
+    <br><br>
+
+    Espero tener el gusto de contar con tu compañía,
+    mi vida. ❤️🍝
   </div>
 
   <div class="details">
@@ -79,8 +97,8 @@ button{
   </div>
 
   <div class="destination">
-    <small>DESTINO</small>
-    <strong>Un lugar con buena pasta</strong>
+    <small>NUESTRA CITA</small>
+    <strong>Una cena italiana para dos</strong>
   </div>
 
   <div class="buttons">
@@ -89,8 +107,13 @@ button{
   </div>
 
   <div id="result" aria-live="polite"></div>
-  <div class="footer">Con mucho cariño, para ti, Viri. ❤️</div>
-  <div class="signature">CON CARIÑO, ULISES · BUON APPETITO</div>
+
+  <div class="footer">
+    Atentamente,<br>
+    alguien que tiene muchas ganas de verte. ❤️
+  </div>
+
+  <div class="signature">CON MUCHO CARIÑO, ULISES</div>
 </div>
 
 <script>
@@ -106,7 +129,6 @@ no.addEventListener("click", () => {
 yes.addEventListener("click", async () => {
   yes.disabled = true;
   yes.textContent = "ENVIANDO... ❤️";
-
   try {
     const response = await fetch(
       "/.netlify/functions/notify-telegram",
@@ -117,22 +139,15 @@ yes.addEventListener("click", async () => {
       }
     );
 
-    
-const data = await response.json();
-
-if (!response.ok || !data.ok) {
-  throw new Error(data.error || "Error desconocido de Telegram");
-}
-
+    if (!response.ok) throw new Error("No se pudo enviar");
 
     result.textContent =
       "¡Respuesta enviada! Muchas gracias, mi amor. ❤️🍝 Ya quiero compartir esta cita contigo, ojitos bonitos.";
     yes.style.display = "none";
     no.style.display = "none";
-
   } catch (error) {
     result.textContent =
-  "Error: " + error.message;
+      "Uy, no se pudo enviar tu respuesta. Inténtalo una vez más, por favor. ❤️";
     yes.disabled = false;
     yes.textContent = "REINTENTAR ❤️";
   }
